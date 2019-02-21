@@ -2,7 +2,7 @@ msg = "Now I need a drink, alcoholic of course, after the heavy lectures involvi
 msg2 = msg.split()
 #print(msg2)
 
-l = list()
+l = []
 
 for i in range(0,len(msg2)):
 	word = msg2[i].replace("," , "").replace("." , "")

@@ -10,7 +10,7 @@ msg = list(msg)
 #print(type(msg))
 
 for i in range(0, len(msg)):
-	print(msg[len(msg) - (i + 1)], end = "")
+	print(msg[-(i+1)], end = "")
 
 print("\n")
 
