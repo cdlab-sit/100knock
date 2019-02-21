@@ -2,6 +2,6 @@
 
 string = 'パタトクカシーー'
 # スライス[開始:終了:ステップ]
-string_step = string[0::2]
+string_step = string[::2]
 
 print(string_step)
