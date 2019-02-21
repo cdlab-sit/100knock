@@ -4,6 +4,7 @@ import re
 
 string = 'Hi He Lied Because Boron Could Not Oxidize Fluorine. '\
          'New Nations Might Also Sign Peace Security Clause. Arthur King Can.'
+
 # 正規表現で,.を消してスペースで分割。
 string = re.sub(r'[^\w\s]', '', string)
 word = string.split(' ')
