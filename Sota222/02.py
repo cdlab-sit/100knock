@@ -3,5 +3,5 @@
 str1 = "パトカー"
 str2 = "タクシー"
 
-plus_str = lambda x, y: x + y
-print(''.join([plus_str(st1, st2) for st1, st2 in zip(str1, str2)]))
+#オシャレの最先端!!
+print(''.join([st1 + st2 for st1, st2 in zip(str1, str2)]))
