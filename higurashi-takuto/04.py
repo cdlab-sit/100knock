@@ -9,7 +9,7 @@ string = 'Hi He Lied Because Boron Could Not Oxidize Fluorine. '\
 string = re.sub(r'[^\w\s]', '', string)
 word = string.split(' ')
 
-# 本当はscope = [0, 4, 5, 6, 7, 8, 14, 15, 18]の一行で18行目までは省略できる。
+# 本当はscope = [0, 4, 5, 6, 7, 8, 14, 15, 18]の一行で19行目までは省略できる。
 scope_range = [0, range(4, 9), range(14, 16), 18]
 scope = []
 for i in scope_range:
