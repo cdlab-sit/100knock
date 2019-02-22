@@ -3,11 +3,5 @@
 str1 = "パトカー"
 str2 = "タクシー"
 
-str3 = ""
-#らっしーさんとほぼ同じになった...
-for st1, st2 in zip(str1, str2):
-    str3 += st1 + st2
-
-print("str3 = ", str3)
-print()
-print(str(st1) for st1, st2 in zip(str1, str2))
+plus_str = lambda x, y: x + y
+print(''.join([plus_str(st1, st2) for st1, st2 in zip(str1, str2)]))
