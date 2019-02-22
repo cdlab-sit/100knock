@@ -8,5 +8,3 @@ string_backward = str[::-1]
 test_str = str[-1]
 print(test_str)
 print(string_backward)
-
-#git test これはgitには上がらないはず
