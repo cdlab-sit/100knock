@@ -9,6 +9,9 @@
 $ touch {00..99}.py
 ```
 
+## 実行速度の計測
+`time-report.py`を使います。`time-report.py`は内部で`path.py`を使用します。`path.py`の中身は`current`という変数に作業パスを入れているだけのファイルです。
+
 ## MeCabのインストール
 ここではMacのbrewを使ったインストール方法をまとめます。
 ```
