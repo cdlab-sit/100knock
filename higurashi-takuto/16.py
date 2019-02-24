@@ -20,7 +20,7 @@ for i in range(num_file):
     content = []
     for line in lines[i*n:(i+1)*n]:
         content.append(line)
-    with open(f'output/hightemp_{i+1}', 'w') as f:
+    with open(f'hightemp_{i+1}', 'w') as f:
         f.write(''.join(content))
 
 # UNIX
