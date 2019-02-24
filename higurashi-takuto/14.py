@@ -12,8 +12,9 @@ with open('hightemp.txt', 'r') as f:
     lines = f.readlines()
 
 # ファイル行数を超えてる場合はファイル行数までにする。
-for i in range(min(args.lines, len(lines))):
-    print(lines[i], end='')
+n = min(args.lines, len(lines))
+for line in lines[:n]:
+    print(line, end='')
 
 # UNIX
 # head -n 5 hightemp.txt
