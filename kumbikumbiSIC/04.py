@@ -9,19 +9,18 @@ msg2 = msg.split()
 ##単語ごとにリスト化
 
 # 配列はイテレータブルなのでforで要素を直接取り出せます。
-word = []
+words = []
 for w in msg2:
-    word.append(w.replace(",", "").replace(".", ""))
+    words.append(w.replace(",", "").replace(".", ""))
 
+#参考：https://qiita.com/segavvy/items/4e592dea2f828e5385ff
+chars = {}
+one_char = [0,5,6,7,8,9,15,16,18]
 
-# msg2[][]が分かりづらい
-chars = []
-row = [0,range(4,9),range(14,16),18]
+for num,word in enumerate(words,1):
+	if num in one_char:
+		chars[word[0:1]] = num
+	else:
+		chars[word[0:2]] = num
 
-for 
-
-dic = dict(zip(chars,row))
-# 辞書型の出力の順番がグチャグチャ
-print(dic)
-#for char, num in dic.items():
-#	print(char + ":" + str(num))
+print(chars)
