@@ -1,4 +1,3 @@
-#リストからn-gramを作成
 def n_gram(words, n):
 	'''
 	n-gram
