@@ -1,3 +1,16 @@
+#行数をカウントせよ．確認にはwcコマンドを用いよ．
+
+file_name = "hightemp.txt"
+lines = 0
+
+with open(file_name) as file:
+	lines = len(file.readlines())
+    #with文なのでcloseが必要ない
+
+print(lines)
+
+
+'''
 以下コマンドラインのコピー
 
 ~/s/1/kumbikumbiSIC ❯❯❯ wc -l hightemp.txt                                            kumbikumbiSIC
@@ -81,3 +94,4 @@ HISTORY
 
 BSD                            February 23, 2005                           BSD
 ~/s/1
+'''

@@ -1,3 +1,14 @@
+file_name = "hightemp.txt"
+
+with open(file_name) as file:
+	lines = file.read()
+	print("変更前：\n",lines)
+	print("変更後：\n",lines.replace('\t', " "))
+	# なぜスペースがでるか不明、誰か教えてください
+
+	#with文なのでcloseが必要ない
+
+'''
 以下コマンドラインのコピー
 
 ~/s/1/kumbikumbiSIC ❯❯❯ tr "\t" " " < hightemp.txt                                    kumbikumbiSIC
@@ -25,3 +36,4 @@
 山梨県 大月 39.9 1990-07-19
 山形県 鶴岡 39.9 1978-08-03
 愛知県 名古屋 39.9 1942-08-02
+'''
