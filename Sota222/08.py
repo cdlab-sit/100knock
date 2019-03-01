@@ -7,12 +7,12 @@ import string
 
 def cipher(sentence):
     sentence = list(sentence)
+    alp = string.ascii_lowercase
     for i, letter in enumerate(sentence):
-        alp = string.ascii_lowercase
         if letter in alp:
             sentence[i] = chr(219 - ord(letter))
     return "".join(sentence)
 
-sentence = " Float like a butterfly, die like a bee !!"
+sentence = " Float like a butterfly, die like a bee !!  --Enrico Maxwell--"
 print("sentence = \n", sentence)
 print("ciphered = \n", cipher(sentence))
