@@ -16,13 +16,9 @@ def main():
     print(shuffle_sentence)
 
 
+# 一行にできて笑う
 def shuffle_word(word):
-    _str = word
-    if not len(word) <= 4:
-        _word = [_char for _char in word]
-        wor = random.sample(_word[1:-1], len(word) - 2)
-        _str = word[0] + "".join(wor) + word[-1]
-    return _str
+    return word[0] + "".join(random.sample([_char for _char in word][1:-1], len(word) - 2)) + word[-1] if not len(word) <= 4 else word
 
 
 if __name__ == "__main__":
