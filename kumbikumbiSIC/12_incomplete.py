@@ -9,16 +9,36 @@
 										:	https://qiita.com/tomotaka_ito/items/35f3eb108f587022fa09
 '''
 
+class ReiteratableWrapper(object):
+    def __init__(self, f):
+        self._f = f
+
+    def __iter__(self):
+        return self._f()
+
 file_name = "hightemp.txt"
 
 with open(file_name) as file, open("col1.txt", "w") as col1, \
 	open("col2.txt", "w") as col2:
 
-	lines = file.readlines();
+	lines = file.read();
+	print(type(lines))
 
+	# lines = ReiteratableWrapper(lines)
+	# linesもう一度ループ文で使いたかった
+	# イテレータ、ジェンレータが原因か？
+
+	print('col1への書き込み')
 	for line in lines:
 		cols = line.split("\t")
+		#print(cols[0])
 		col1.write(cols[0] + "\n")
+
+	# 何も書き込まれない
+	print('col2への書き込み')
+	for line in lines:
+		cols = line.split("\t")	
+		#print(cols[1])
 		col2.write(cols[1] + "\n")
 
 
