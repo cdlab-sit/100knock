@@ -1,7 +1,7 @@
 # タブ1文字につきスペース1文字に置換せよ．確認にはsedコマンド，trコマンド，
 # もしくはexpandコマンドを用いよ．
 
-# python 
+# python
 from os.path import dirname, join
 current_dir = dirname(__file__)
 file_path = join(current_dir, './hightemp.txt')
