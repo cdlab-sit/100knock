@@ -13,11 +13,12 @@ marge = []
 for i, line in enumerate(f1_lines):
     marge.append(line.strip('\n') + '\t' + f2_lines[i])
 
+f1.close()
+f2.close()
+
 with open(join(dirname(__file__), 'marge.txt'), 'w') as f:
     f.write('\n'.join(marge))
 
-f1.close()
-f2.close()
 
 # UNIX
 # paste col1.txt col2.txt > marge.txt
