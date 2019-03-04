@@ -12,8 +12,13 @@ N = int(args[1])
 with open(join(dirname(__file__), 'hightemp.txt'), 'r') as f:
     lines = f.readlines()
 
-split = list(np.array_split(lines, N))
-print(split)
+split_sheets = list(np.array_split(lines, N))
+
+for i, sheet in enumerate(split_sheets):
+    with open(
+        join(dirname(__file__), 'split_sheet_{}.txt'.format(i)), 'w'
+    ) as f:
+        f.write(''.join(sheet))
 
 # UNIX
 # split -l 3 hightemp.txt split_txt
