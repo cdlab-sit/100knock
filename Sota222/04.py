@@ -8,7 +8,7 @@ words = re.sub("[,.]", "", string).split(" ")
 
 chemical_symbols = {}
 
-for i, word in enumerate(words):
-    chemical_symbols[word[0] if i + 1 in one_letter else word[:2]] = i + 1
+for i, word in enumerate(words, 1):
+    chemical_symbols[word[0] if i in one_letter else word[:2]] = i
 
 print(chemical_symbols)
