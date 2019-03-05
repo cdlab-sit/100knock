@@ -3,16 +3,18 @@
 # 適当な英語の文（例えば"I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind ."）を与え，その実行結果を確認せよ．
 import random
 
+
+def typoglycemia(string):
+    words_list = string.split()
+    typo_words_list = []
+    for word in words_list:
+        if 4 < len(word):
+            word = word[0] + \
+                "".join(random.sample(word[1:-1], len(word[1:-1]))) + word[-1]
+        typo_words_list.append(word)
+    return " ".join(typo_words_list)
+
 string = "I couldn't believe that I could actually understand what I was"\
     " reading : the phenomenal power of the human mind ."
-lis = string.split()
-rnd_list = []
-
-for word in lis:
-    if 4 < len(word):
-        word = word[0] + \
-            "".join(random.sample(word[1:-1], len(word[1:-1]))) + word[-1]
-    rnd_list.append(word)
-
-rnd_string = " ".join(rnd_list)
-print(rnd_string)
+typo_string = typoglycemia(string)
+print(typo_string)
