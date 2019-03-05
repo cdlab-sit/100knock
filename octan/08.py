@@ -4,13 +4,13 @@
 # この関数を用い，英語のメッセージを暗号化・復号化せよ．
 
 
-def cipher(line):
-    ci_line = ""
-    for char in line:
-        if ord("a") <= ord(char) <= ord("z"):
-            char = chr(219 - ord(char))
-        ci_line += char
-    return ci_line
+def cipher(string):
+    ci_str = ""
+    for word in string:
+        if ord("a") <= ord(word) <= ord("z"):
+            word = chr(219 - ord(word))
+        ci_str += word
+    return ci_str
 
 string = "abCdeFいろは"
 print("変化前: ", string)

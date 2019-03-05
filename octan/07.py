@@ -5,5 +5,5 @@
 def mk_str(x, y, z):
     line = str(x) + "時の" + str(y) + "は" + str(z)
     return line
-
-print(mk_str(12, "気温", 22.4))
+string = mk_str(12, "気温", 22.4)
+print(string)
