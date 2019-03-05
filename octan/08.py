@@ -7,7 +7,7 @@
 def cipher(line):
     ci_line = ""
     for char in line:
-        if 96 < ord(char) < 123:
+        if ord("a") <= ord(char) <= ord("z"):
             char = chr(219 - ord(char))
         ci_line += char
     return ci_line
