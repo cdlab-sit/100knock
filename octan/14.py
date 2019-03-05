@@ -7,6 +7,10 @@ args = sys.argv
 with open("hightemp.txt", "r") as temp_file:
     lines = temp_file.readlines()
 
+# もっといいやり方があるとしか思えないので、あとで変更します
 for row in range(int(args[1])):
 	line = lines[row].rstrip("\n")
     print(line)
+
+# UNIX
+# head -n 2 hightemp.txt
