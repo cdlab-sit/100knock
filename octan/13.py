@@ -9,8 +9,7 @@ with open("col2.txt", "r") as col2_file:
 
 marge_list = []
 for col1_word, col2_word in zip(col1_list, col2_list):
-    col1_word = col1_word.replace("\n", "")
-    marge_list.append(col1_word + "\t" + col2_word)
+    marge_list.append(col1_word.rstrip("\n") + "\t" + col2_word)
 
 marge_text = "".join(marge_list)
 with open("marge_col.txt", "w") as marge_file:
