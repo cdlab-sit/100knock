@@ -2,21 +2,28 @@
 # XとYの和集合，積集合，差集合を求めよ．さらに，'se'というbi-gramがXおよびYに含まれるかどうかを調べよ．
 
 
-def n_gram(str, n):
-    ngr_list = []
+def n_gram(string, n):
+    ngram_list = []
 
-    for i in range(len(str) - n + 1):
-        ngr_list.append(str[i:i + n])
+    for count in range(len(string) - n + 1):
+        ngram_list.append(string[count:count + n])
 
-    return ngr_list
+    return ngram_list
 
-X = n_gram("paraparaparadise", 2)
-Y = n_gram("paragraph", 2)
+X = set(n_gram("paraparaparadise", 2))
+Y = set(n_gram("paragraph", 2))
+union = X | Y
+intersection = X & Y
+difference_XY = X - Y
+difference_YX = Y - X
+include_inX = "se" in X
+include_inY = "se" in Y
+
 print("Xの中身: ", X)
 print("Yの中身: ", Y)
-print("和集合: ", set(X) | set(Y))
-print("積集合: ", set(X) & set(Y))
-print("差集合: ", set(X) - set(Y))
-print("差集合: ", set(Y) - set(X))
-print("seがXに含まれているか: ", "se" in X)
-print("seがYに含まれているか: ", "se" in Y)
+print("和集合: ", union)
+print("積集合: ", intersection)
+print("差集合 X-Y: ", difference_XY)
+print("差集合 Y-X: ", difference_YX)
+print("seがXに含まれているか: ", include_inX)
+print("seがYに含まれているか: ", include_inY)

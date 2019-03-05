@@ -6,10 +6,14 @@ col_file_1 = open("col1.txt", "w")
 col_file_2 = open("col2.txt", "w")
 
 for line in temp_file:
-    line_lis = line.split()
-    col_file_1.write(line_lis[0] + "\n")
-    col_file_2.write(line_lis[1] + "\n")
+    line_list = line.split()
+    col_file_1.write(line_list[0] + "\n")
+    col_file_2.write(line_list[1] + "\n")
 
 temp_file.close()
 col_file_1.close()
 col_file_2.close()
+
+# UNIXコマンド
+# cut -f 1 hightemp.txt > col1.txt
+# cut -f 2 hightemp.txt > col2.txt
