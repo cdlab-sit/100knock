@@ -2,12 +2,12 @@
 
 str_p = "パトカー"
 str_t = "タクシー"
-str = ""
+string = ""
 
 for i in range(4):
-    str += str_p[i]
-    str += str_t[i]
-print(str)
+    string += str_p[i]
+    string += str_t[i]
+print(string)
 
 # zip関数を知っていたかった
 str_zip = ""
