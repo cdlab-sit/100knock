@@ -21,11 +21,13 @@ file_name = "hightemp.txt"
 with open(file_name) as file, open("col1.txt", "w") as col1, \
 	open("col2.txt", "w") as col2:
 
-	lines = file.read();
+	lines = file.read()
+	lines2 = lines
+
 	print(type(lines))
 
 	# lines = ReiteratableWrapper(lines)
-	# linesもう一度ループ文で使いたかった
+	# linesをもう一度ループ文で使いたかった
 	# イテレータ、ジェンレータが原因か？
 
 	print('col1への書き込み')
@@ -36,11 +38,10 @@ with open(file_name) as file, open("col1.txt", "w") as col1, \
 
 	# 何も書き込まれない
 	print('col2への書き込み')
-	for line in lines:
+	for line in lines2:
 		cols = line.split("\t")	
-		#print(cols[1])
+		print(cols[1])
 		col2.write(cols[1] + "\n")
-
 
 '''
 cut 参考url
