@@ -2,8 +2,8 @@ file_name = "hightemp.txt"
 
 with open(file_name) as file:
 	lines = file.read()
-	print("変更前：\n",lines)
-	print("変更後：\n",lines.replace('\t', " "))
+	print("変更前：\n", lines)
+	print("変更後：\n",l ines.replace('\t', " "))
 	# なぜスペースがでるか不明、誰か教えてください
 
 	#with文なのでcloseが必要ない
