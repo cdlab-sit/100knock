@@ -5,12 +5,14 @@ import sys
 args = sys.argv
 
 with open("hightemp.txt", "r") as temp_file:
-    lines = temp_file.readlines()
+    temp_text = temp_file.readlines()
 
-# もっといいやり方があるとしか思えないので、あとで変更します
-for row in range(int(args[1])):
-	line = lines[row].rstrip("\n")
-    print(line)
+# 引数がファイルの行数を超えている場合は, ファイルの行数までとする.
+# 参照: higurashi-takuto 14.py
+row = min(int(args[1]), len(temp_text))
+
+for line in temp_text[:row]:
+    print(line.rstrip("\n"))
 
 # UNIX
 # head -n 2 hightemp.txt
