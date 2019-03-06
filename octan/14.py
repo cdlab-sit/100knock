@@ -4,7 +4,7 @@
 import argparse
 parser = argparse.ArgumentParser(description='引数分の行数表示する(head)')
 parser.add_argument(
-    'n_line', type=int, default=0.01,
+    'n_line', type=int, default=1,
     help='int型(マイナスでも動作可能だが、headコマンドの代用と考えると自然数が好ましい)'
 )
 args = parser.parse_args()
