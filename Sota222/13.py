@@ -9,16 +9,16 @@ f2 = open(join(dirname(__file__), 'col2.txt'), 'r')
 
 f1_lines = f1.readlines()
 f2_lines = f2.readlines()
-marge = []
+merge = []
 for i, line in enumerate(f1_lines):
-    marge.append(line.strip('\n') + '\t' + f2_lines[i])
+    merge.append(line.strip('\n') + '\t' + f2_lines[i])
 
 f1.close()
 f2.close()
 
-with open(join(dirname(__file__), 'marge.txt'), 'w') as f:
-    f.write('\n'.join(marge))
+with open(join(dirname(__file__), 'merge.txt'), 'w') as f:
+    f.write(''.join(merge))
 
 
 # UNIX
-# paste col1.txt col2.txt > marge.txt
+# paste col1.txt col2.txt > merge.txt
