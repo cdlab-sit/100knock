@@ -3,7 +3,6 @@
 
 import json
 import re
-import pprint
 min_lv = lv = 1
 file_name = 'article_UK.json'
 
@@ -13,14 +12,16 @@ with open(file_name, "r") as f:
 dupli_sec = {}
 while True:
     s_pattern = '={' + str(lv + 1) + '}(.*)={' + str(lv + 1) + '}'
-    _change = re.findall(s_pattern, article_UK)
-    dupli_sec[lv] = set(map(lambda x: x.strip('='), _change))
+    _sec = re.findall(s_pattern, article_UK)
+    dupli_sec[lv] = set(map(lambda x: x.strip('='), _sec))
     if dupli_sec[lv]:
         lv += 1
     else:
         break
-section = {}
+sections = {}
 for lv in range(min_lv, lv):
-    section[lv] = dupli_sec[lv] - dupli_sec[lv + 1]
+    sections[lv] = dupli_sec[lv] - dupli_sec[lv + 1]
 
-pprint.pprint(section)
+for level, _section in sections.items():
+    _section = ' '.join(_section)
+    print(f'セクション{level}:\n{_section}')
