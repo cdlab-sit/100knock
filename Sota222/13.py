@@ -17,7 +17,7 @@ f1.close()
 f2.close()
 
 with open(join(dirname(__file__), 'marge.txt'), 'w') as f:
-    f.write('\n'.join(marge))
+    f.write(''.join(marge))
 
 
 # UNIX
