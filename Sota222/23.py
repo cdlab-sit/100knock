@@ -10,17 +10,17 @@ file_name = 'article_UK.json'
 with open(file_name, "r") as f:
     article_UK = json.load(f)
 
-more_equal = {}
+dupli_sec = {}
 while True:
     s_pattern = '={' + str(lv + 1) + '}(.*)={' + str(lv + 1) + '}'
     _change = re.findall(s_pattern, article_UK)
-    more_equal[lv] = set(map(lambda x: x.strip('='), _change))
-    if more_equal[lv]:
+    dupli_sec[lv] = set(map(lambda x: x.strip('='), _change))
+    if dupli_sec[lv]:
         lv += 1
     else:
         break
 section = {}
 for lv in range(min_lv, lv):
-    section[lv] = more_equal[lv] - more_equal[lv + 1]
+    section[lv] = dupli_sec[lv] - dupli_sec[lv + 1]
 
 pprint.pprint(section)
