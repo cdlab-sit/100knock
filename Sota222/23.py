@@ -3,31 +3,24 @@
 
 import json
 import re
-
-min_lv = lv = 2
+import pprint
+min_lv = lv = 1
 file_name = 'article_UK.json'
 
 with open(file_name, "r") as f:
     article_UK = json.load(f)
 
-s_pattern = '={' + str(min_lv) + '}(.*)={' + str(min_lv) + '}'
-sec_mix = re.findall(s_pattern, article_UK)
-
-sec_dic = {}
+more_equal = {}
 while True:
-    print(min_lv - lv)
-    sec_dic[lv] = list(filter(
-        lambda x: x.strip('=') if x[lv - min_lv] != '=' else None, sec_mix
-    ))
-    for word in sec_mix:
-        if word in sec_dic[lv]:
-            sec_mix.remove(word)
-            print(sec_mix)
-
-    print(sec_dic)
-    if not sec_dic[lv]:
-        print('nasi')
-        break
-    else:
+    s_pattern = '={' + str(lv + 1) + '}(.*)={' + str(lv + 1) + '}'
+    _change = re.findall(s_pattern, article_UK)
+    more_equal[lv] = set(map(lambda x: x.strip('='), _change))
+    if more_equal[lv]:
         lv += 1
-print(sec_dic)
+    else:
+        break
+section = {}
+for lv in range(min_lv, lv):
+    section[lv] = more_equal[lv] - more_equal[lv + 1]
+
+pprint.pprint(section)
