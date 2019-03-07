@@ -1,6 +1,6 @@
 # sota-watanabe
 ## 開発環境
-  言語: Python 3.7.2  
+  言語: Python 3.6.8  
   OS: Linux Mint 19.1 Tessa 
-  text editer: Visual Stdio Code
+  Text editer: Visual Stdio Code
   
