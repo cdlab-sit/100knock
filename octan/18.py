@@ -12,7 +12,7 @@ for line in lines:
     line_list = line.split()
     temp_list.append(line_list)
 
-temp_list.sort(key=itemgetter(2))  # 各リストの2番目の要素をキーに
+temp_list.sort(key=itemgetter(2))  # 各リストの3番目の要素をキーに
 
 for list_line in temp_list[::-1]:
     print(list_line)
