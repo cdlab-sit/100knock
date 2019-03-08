@@ -21,4 +21,4 @@ for list_line in freq_list[::-1]:
     print(list_line[0], ':出現 ', list_line[1], '回')
 
 # UNIX
-# 
+# cut -f 1 hightemp.txt | sort | uniq -c | sort -r -n
