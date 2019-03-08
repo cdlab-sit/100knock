@@ -7,15 +7,14 @@ with open("hightemp.txt", "r") as temp_file:
     lines = temp_file.readlines()
 
 temp_list = []
-
 for line in lines:
     line_list = line.split()
     temp_list.append(line_list)
 
-temp_list.sort(key=itemgetter(2))  # 各リストの3番目の要素をキーに
+temp_list.sort(key=itemgetter(2))  # 各リストの3番目の要素をキーにsort
 
-for list_line in temp_list[::-1]:
-    print(list_line)
+for line in temp_list[::-1]:
+    print(line[0], ' ', line[1], ' ', line[2], ' ', line[0])
 
 # UNIX
 # sort -r -k 3,3 hightemp.txt
