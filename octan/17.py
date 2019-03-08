@@ -14,4 +14,4 @@ prefec_list = list(set(col1_list))
 print(prefec_list)
 
 # UNIX
-# cut -f 1 -d $' ' hightemp.txt | sort | uniq
+# cut -f 1 hightemp.txt | sort | uniq
