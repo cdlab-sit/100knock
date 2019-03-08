@@ -17,4 +17,8 @@ for prefec in prefec_list:
     freq_list.append([prefec, col1_list.count(prefec)])
 
 freq_list.sort(key=itemgetter(1))  # 各リストの2番目の要素をキーに
-print(freq_list)
+for list_line in freq_list[::-1]:
+    print(list_line[0], ':出現 ', list_line[1], '回')
+
+# UNIX
+# 
