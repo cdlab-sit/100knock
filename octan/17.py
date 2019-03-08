@@ -10,8 +10,9 @@ for line in lines:
     line_list = line.split()
     col1_list.append(line_list[0])
 
-prefec_list = list(set(col1_list))
-print(prefec_list)
+prefec_list = list(set(col1_list))  # 重複している県名をなくす
+for list_line in prefec_list:
+    print(list_line)
 
 # UNIX
 # cut -f 1 hightemp.txt | sort | uniq
