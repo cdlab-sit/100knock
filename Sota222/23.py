@@ -11,7 +11,7 @@ with open(file_name, "r") as f:
 
 dupli_sec = {}
 while True:
-    s_pattern = '={' + str(lv + 1) + '}(.*)={' + str(lv + 1) + '}'
+    s_pattern = f'={{{lv + 1}}}(.*)={{{lv + 1}}}'
     _sec = re.findall(s_pattern, article_UK)
     dupli_sec[lv] = set(map(lambda x: x.strip('='), _sec))
     if dupli_sec[lv]:
@@ -24,4 +24,4 @@ for lv in range(min_lv, lv):
 
 for level, _section in sections.items():
     _section = ' '.join(_section)
-    print(f'セクション{level}:\n{_section}')
+    print(f'level{level}:\n{_section}')
