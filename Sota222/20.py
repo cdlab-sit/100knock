@@ -4,22 +4,39 @@
 
 import gzip
 import json
-from os.path import dirname, join
 
 # jawiki-country.jsonはjsonファイルではあるが、json形式になっているわけではない
 # 第三章の問題文にも書いてあるように、一行、一行がjson形式になっているファイルである。
 # よってjson.load()では読み込めず、一行ずつjson.loads()で読み込む必要がある。
 # 紛らわしいわ!!
-with gzip.open(join(dirname(__file__), 'jawiki-country.json.gz'), "r") as f:
-    for line in f:
-        article = json.loads(line)
-        if article['title'] == 'イギリス':
-            article_UK = article['text']
-            break
 
 
-with open(join(dirname(__file__), 'article_UK.json'), "w") as f:
-    json.dump(article_UK, f)  # json形式で書き込み
+def main():
+    """main関数"""
+    file_name = 'jawiki-country.json.gz'
+    article_name = 'イギリス'
+    article_UK = get_article(file_name, article_name)
+    print(article_UK)
 
-    # json.dump(article_UK, f, ensure_ascii=False,
-    #                indent=4, sort_keys=True, separators=(',', ': '))
+
+def get_article(file_name, article_name):
+    """引数file_nameのファイルを開き、article_nameの記事を抽出する関数
+
+    Arguments:
+        file_name {str} -- 対象のファイル名
+        article_name {str} -- 抽出する記事名
+
+    Returns:
+        str -- 対象の記事
+    """
+    with gzip.open(file_name, "r") as f_file:
+        for line in f_file:
+            article = json.loads(line)
+            if article['title'] == article_name:
+                article_UK = article['text']
+                break
+        print(type(article_UK))
+    return article_UK
+
+if __name__ == '__main__':
+    main()
