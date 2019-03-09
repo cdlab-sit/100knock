@@ -54,8 +54,6 @@ def get_basic(article_UK):
         basic_pattern, basic_infos.group(), flags=re.DOTALL)
     basic_info_dic = {}
     for line in basic_info:
-        print(f'line[0] = {line[0]}')
-        print(f'line[1] = {line[1]}')
         basic_info_dic[line[0]] = line[1]
     return '\n'.join([f'{field_name}: {val}'
                       for field_name, val in basic_info_dic.items()])
