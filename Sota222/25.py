@@ -6,6 +6,7 @@ import gzip
 import json
 import re
 
+
 def main():
     """main関数"""
     file_name = 'jawiki-country.json.gz'
