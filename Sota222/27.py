@@ -52,11 +52,9 @@ def get_basic(article_UK):
     basic_info = re.findall(
         basic_pattern, basic_infos.group(), flags=re.DOTALL)
     basic_info_dic = {}
-    for line in basic_info: 　# for で回すと\nで切られる
-        print(line[1])
-        _without_emp = delete_emphasis(line[1])
-        _without_link = delete_link(_without_emp)
-        basic_info_dic[line[0]] = _without_link
+    for line in basic_info:  # for で回すと\nで切られる
+        print(f'line[0] = {line[0]}')
+        basic_info_dic[line[0]] = delete_emphasis(line[1])
 
     return '\n'.join([f'{field_name}: {val}'
                       for field_name, val in basic_info_dic.items()])

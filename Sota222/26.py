@@ -48,13 +48,12 @@ def get_basic(article_UK):
     """
     basic_pattern = r'{{基礎情報(.+?)}}\n'
     basic_infos = re.search(basic_pattern, article_UK, flags=re.DOTALL)
-
-    basic_pattern = r'\|(.+?) = (.+?)\n'
+    basic_pattern = r'\n\|(\w+) = (.+?)(\n\||}}\n)'
     basic_info = re.findall(
         basic_pattern, basic_infos.group(), flags=re.DOTALL)
     basic_info_dic = {}
     for line in basic_info:
-        basic_info_dic[line[0]] = delete_emphasis(line[1])
+        basic_info_dic[line[0]] = line[1]
     return '\n'.join([f'{field_name}: {val}'
                       for field_name, val in basic_info_dic.items()])
 
