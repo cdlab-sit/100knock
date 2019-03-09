@@ -11,8 +11,8 @@ def main():
     file_name = 'jawiki-country.json.gz'
     article_name = 'イギリス'
     article_UK = get_article(file_name, article_name)
-    sections = get_media(article_UK)
-    print(sections)
+    media_files = get_media(article_UK)
+    print(media_files)
 
 
 def get_article(file_name, article_name):
