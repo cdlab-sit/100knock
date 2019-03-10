@@ -48,14 +48,14 @@ def get_basic(article_UK):
     basic_pattern = r'{{基礎情報(.+?)}}\n'
     basic_infos = re.search(basic_pattern, article_UK, flags=re.DOTALL)
 
-    basic_pattern = r'\|(.+?) = (.+?)\n'
-    basic_info = re.findall(
-        basic_pattern, basic_infos.group(), flags=re.DOTALL)
+    basic_pattern = r'\n\|(.+?) = (.+?)(?=\n\||}}\n)'
+    basic_info = re.findall(basic_pattern, basic_infos.group(),
+                            flags=re.DOTALL)
     basic_info_dic = {}
-    for line in basic_info:  # for で回すと\nで切られる
-        print(f'line[0] = {line[0]}')
-        basic_info_dic[line[0]] = delete_emphasis(line[1])
-
+    for line in basic_info:
+        _without_emp = delete_emphasis(line[1])
+        _without_link = delete_link(_without_emp)
+        basic_info_dic[line[0]] = _without_link
     return '\n'.join([f'{field_name}: {val}'
                       for field_name, val in basic_info_dic.items()])
 
@@ -69,16 +69,19 @@ def delete_emphasis(line):
     Returns:
         str -- 強調表現を削除した基礎情報の値
     """
-    return line.replace("'", '')
+    return re.sub(r"''{2,}(.+?)''{2,}", r"\1", line)
 
 
 def delete_link(line):
-    # print(line.translate(str. maketrans({'[': None, ']': None})))
-    # print(line)
-    # print(line.translate(str. maketrans({'[': None, ']': None})))
-    # print(line)
-    # print(re.sub(r'\[\[(.+?)\]\]', r'(.+?)', line, flags=re.DOTALL))
-    return re.sub(r'\[\[(.+?)\]\]', r'(.+?)', line, flags=re.DOTALL)
+    """引数の文字列から内部リンク表現を削除する関数
+
+    Arguments:
+        line {str} -- 基礎情報の値
+
+    Returns:
+        str -- 内部リンク表現を削除した基礎情報の値
+    """
+    return re.sub(r"\[\[(.+?)\]\]", '', line)
 
 if __name__ == '__main__':
     main()
