@@ -1,7 +1,6 @@
-''' 内部リンクの除去 '''
-# 26の処理に加えて，テンプレートの値からMediaWikiの内部リンクマークアップを除去し，
-# テキストに変換せよ（参考: マークアップ早見表）．
-
+''' MediaWikiマークアップの除去 '''
+# 27の処理に加えて，テンプレートの値からMediaWikiマークアップを可能な限り除去し，
+# 国の基本情報を整形せよ．
 import gzip
 import json
 import re
@@ -55,7 +54,8 @@ def get_basic(article_UK):
     for line in basic_info:
         _without_emp = delete_emphasis(line[1])
         _without_link = delete_link(_without_emp)
-        basic_info_dic[line[0]] = _without_link
+        _without_markup = delete_markup(_without_link)
+        basic_info_dic[line[0]] = _without_markup
     return '\n'.join([f'{field_name}: {val}'
                       for field_name, val in basic_info_dic.items()])
 
@@ -69,7 +69,7 @@ def delete_emphasis(line):
     Returns:
         str -- 強調表現を削除した基礎情報の値
     """
-    return re.sub(r"''{2,}(.+?)''{2,}", r"\1", line)
+    return re.sub(r"''{2,}(.+?)''{2,}", r"\1", line, flags=re.DOTALL)
 
 
 def delete_link(line):
@@ -81,7 +81,24 @@ def delete_link(line):
     Returns:
         str -- 内部リンク表現を削除した基礎情報の値
     """
-    return re.sub(r"\[\[(.+?)\]\]", '', line)
+    return re.sub(r"\[\[(.+?)\]\]", r'\1', line, flags=re.DOTALL)
+
+
+def delete_markup(line):
+    """引数の文字列からMediaWikiマークアップを削除する関数
+
+    Arguments:
+        line {str} -- 基礎情報の値
+
+    Returns:
+        str -- MediaWikiマークアップを削除した基礎情報の値
+    """
+    delete_bracket = re.sub(r'\[(.+?)\]', '', line, flags=re.DOTALL)
+    delete_angle = re.sub(r'<br\s?/>|</?ref>', '', delete_bracket,
+                          flags=re.DOTALL)
+    delete_ref = re.sub(r'<ref name=(.+?)/?>', '', delete_angle,
+                        flags=re.DOTALL)
+    return delete_ref
 
 if __name__ == '__main__':
     main()
