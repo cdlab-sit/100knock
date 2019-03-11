@@ -12,7 +12,7 @@ def main():
     in_file_name = 'neko.txt'
     out_file_name = 'neko.txt.mecab'
     neko_txt = read_file(in_file_name)
-    result = Morphological_analysis(neko_txt)
+    result = morphological_analysis(neko_txt)
     write_result(result, out_file_name)
 
 
@@ -22,7 +22,7 @@ def read_file(file_name):
     return contents
 
 
-def Morphological_analysis(sentence):
+def morphological_analysis(sentence):
     t = MeCab.Tagger('')
     return t.parse(sentence)
 
