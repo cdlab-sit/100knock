@@ -5,7 +5,6 @@ import re
 
 
 def main():
-    """main文"""
     file_name = 'neko.txt.mecab'
     contents = read_file(file_name)
     result = load_contents(contents)
