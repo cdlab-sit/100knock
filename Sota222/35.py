@@ -1,5 +1,5 @@
-''' 「AのB」 '''
-# 2つの名詞が「の」で連結されている名詞句を抽出せよ．
+''' 名詞の連接 '''
+# 名詞の連接（連続して出現する名詞）を最長一致で抽出せよ
 
 import re
 
@@ -8,8 +8,8 @@ def main():
     file_name = 'neko.txt.mecab'
     contents = read_file(file_name)
     result = load_contents(contents)
-    noun_couples = extract_noun_couple(result)
-    print(noun_couples)
+    noun_compound = extract_noun_compound(result)
+    print(noun_compound)
 
 
 def read_file(file_name):
@@ -33,20 +33,16 @@ def load_contents(contents):
     return morphological_list
 
 
-def extract_noun_couple(morphological_list):
-    noun_couples = []
-    for i, morphological in enumerate(morphological_list):
-        if check_morphological(
-                morphological, surface='の', pos='助詞', pos1='連体化') \
-                and check_morphological(morphological_list[i - 1], pos='名詞') \
-                and check_morphological(morphological_list[i + 1], pos='名詞'):
-
-            noun_couples.append(  # \だと表示の際スペースが空いた
-                f"{morphological_list[i - 1]['surface']}" +
-                f"{morphological['surface']}" +
-                f"{morphological_list[i + 1]['surface']}")
-
-    return noun_couples
+def extract_noun_compound(morphological_list):
+    noun_compoundes = []
+    nouns = ''
+    for morphological in morphological_list:
+        if check_morphological(morphological, pos='名詞'):
+            nouns += morphological['surface']
+        elif nouns:
+            noun_compoundes.append(nouns)
+            nouns = ''
+    return noun_compoundes
 
 
 def check_morphological(morphological, **elements):
