@@ -43,10 +43,10 @@ def extract_verb_surface(morphological_list):
 
 
 def extract_verb_base(morphological_list):
-    verb_surfaces = []
+    verb_bases = []
     for morphological in morphological_list:
         if morphological['pos'] == '動詞':
-            verb_surfaces.append(morphological['base'])
-    return verb_surfaces
+            verb_bases.append(morphological['base'])
+    return verb_bases
 if __name__ == "__main__":
     main()
