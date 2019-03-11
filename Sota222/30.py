@@ -22,7 +22,7 @@ def read_file(file_name):
 
 
 def load_contents(contents):
-    morphological = ['surface', 'base', 'pos', 'pos1']
+    morphological_element = ['surface', 'base', 'pos', 'pos1']
     element_place = [0, 7, 1, 2]
     morphological_list = []
     for line in contents.split('\n'):
@@ -31,7 +31,7 @@ def load_contents(contents):
         splited_line = re.split('[\t,]', line)
         morphological = {
             morpho: splited_line[place]
-            for morpho, place in zip(morphological, element_place)}
+            for morpho, place in zip(morphological_element, element_place)}
         morphological_list.append(morphological)
     return morphological_list
 
