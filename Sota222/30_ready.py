@@ -4,6 +4,7 @@
 # このファイルを用いて，以下の問に対応するプログラムを実装せよ．
 
 # なお，問題37, 38, 39はmatplotlibもしくはGnuplotを用いるとよい．
+import MeCab
 
 
 def main():
@@ -22,7 +23,6 @@ def read_file(file_name):
 
 
 def Morphological_analysis(sentence):
-    import MeCab
     t = MeCab.Tagger('')
     return t.parse(sentence)
 
