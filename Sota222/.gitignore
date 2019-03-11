@@ -2,3 +2,4 @@
 !*.py
 test[0-9].py
 !jawiki-country.json.gz
+!neko.txt
