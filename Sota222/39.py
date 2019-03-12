@@ -1,9 +1,10 @@
-''' 頻度上位10語 '''
-# 出現頻度が高い10語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．
+''' Zipfの法則 '''
+# 単語の出現頻度順位を横軸，その出現頻度を縦軸として，両対数グラフをプロットせよ．
 
 import re
 import collections
 import matplotlib.pyplot as plt
+
 font = {"family": "IPAexGothic"}  # フォントを変更
 plt.rc('font', **font)  # フォントを変更
 
@@ -13,7 +14,7 @@ def main():
     contents = read_file(file_name)
     result = load_contents(contents)
     frequency = get_frequency(result)
-    make_bar_graph(frequency, 10)
+    make_double_log_graph(frequency)
 
 
 def read_file(file_name):
@@ -45,18 +46,15 @@ def get_frequency(morphological_list):
     return freq
 
 
-def make_bar_graph(frequency, count):
-    x = []
-    y = []
-    for i, word in enumerate(frequency):
-        if i >= count:
-            break
-        x.append(word[0])
-        y.append(word[1])
-    print(y)
-    plt.bar(x, y, tick_label=x)
-    plt.savefig("test.png", bbox_inches="tight")  # 見切れを修正
-    plt.title('単語の出現頻度')
+def make_double_log_graph(frequency):
+    counts = list(zip(*frequency))[1]
+    plt.scatter(range(1, len(counts) + 1), counts)
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.grid(axis='both')
+    plt.title('両対数グラフ')
+    plt.xlabel('単語の出現頻度順位')
+    plt.ylabel('出現頻度')
     plt.show()
 
 
