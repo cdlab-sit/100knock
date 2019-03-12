@@ -49,10 +49,11 @@ def make_bar_graph(frequency, count):
     x = []
     y = []
     for i, word in enumerate(frequency):
+        if i >= count:
+            break
         x.append(word[0])
         y.append(word[1])
-        if i > count:
-            break
+    print(y)
     plt.bar(x, y, tick_label=x)
     plt.savefig("test.png", bbox_inches="tight")  # 見切れを修正
     plt.title('単語の出現頻度')
