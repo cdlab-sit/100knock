@@ -4,7 +4,8 @@
 import re
 import collections
 import matplotlib.pyplot as plt
-import random
+font = {"family": "IPAexGothic"}  # フォントを変更 
+plt.rc('font', **font)  # フォントを変更 
 
 
 def main():
@@ -52,7 +53,9 @@ def make_bar_graph(frequency, count):
         y.append(word[1])
         if i > 10:
             break
-    plt.bar(x, y, tick_label=y)
+    plt.bar(x, y, tick_label=x)
+    # plt.savefig("test.png", bbox_inches="tight")
+    plt.tight_layout()  # 見切れを修正
     plt.show()
     print(x)
     print(y)
