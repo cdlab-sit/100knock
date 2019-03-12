@@ -4,8 +4,8 @@
 import re
 import collections
 import matplotlib.pyplot as plt
-font = {"family": "IPAexGothic"}  # フォントを変更 
-plt.rc('font', **font)  # フォントを変更 
+font = {"family": "IPAexGothic"}  # フォントを変更
+plt.rc('font', **font)  # フォントを変更
 
 
 def main():
@@ -51,14 +51,13 @@ def make_bar_graph(frequency, count):
     for i, word in enumerate(frequency):
         x.append(word[0])
         y.append(word[1])
-        if i > 10:
+        if i > count:
             break
     plt.bar(x, y, tick_label=x)
-    # plt.savefig("test.png", bbox_inches="tight")
-    plt.tight_layout()  # 見切れを修正
+    plt.savefig("test.png", bbox_inches="tight")  # 見切れを修正
+    plt.title('単語の出現頻度')
     plt.show()
-    print(x)
-    print(y)
+
 
 if __name__ == "__main__":
     main()
