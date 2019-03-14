@@ -8,7 +8,6 @@ import MeCab
 
 
 def main():
-    """main文"""
     in_file_name = 'neko.txt'
     out_file_name = 'neko.txt.mecab'
     neko_txt = read_file(in_file_name)
