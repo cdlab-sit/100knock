@@ -24,8 +24,8 @@ def read_file(file_name):
 
 def load_dependency_parsing(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
-    morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),(?:.+?),(?:.+?)' \
-                       ',(?:.+?),(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
+    morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
+                       '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
     sentences_list = []
     for sentence in sentences:
