@@ -10,7 +10,7 @@ import re
 def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
-    result = load_dependency_parsing(neko_txt_cabocha)
+    result = load_morpheme(neko_txt_cabocha)
     sentence = int(input('何文目の形態素列を表示させますか？'))
     for morph in result[sentence - 1]:
         print(morph.show_elements())
@@ -22,7 +22,7 @@ def read_file(file_name):
     return contents
 
 
-def load_dependency_parsing(analytical_data):
+def load_morpheme(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
                        '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
