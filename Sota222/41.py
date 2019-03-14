@@ -12,10 +12,9 @@ def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
     result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
-    
-    for a in result_dependency_parsing[0]:
+ 
+    for a in result_dependency_parsing[7]:
         print(a.show_elements())
-
 
 def read_file(file_name):
     with open(file_name, 'r') as f:
@@ -25,21 +24,21 @@ def read_file(file_name):
 
 def load_dependency_parsing(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
-    chunk_pattern = r'<chunk id="\d*" link="(\d*)" (.+?)</chunk>'
+    chunk_pattern = r'<chunk id="\d*" link="(.+?)"(.+?)</chunk>'
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
                        '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
     sentence_list = []
-    chunk_class_list = []
     for sentence in sentences:
         chunks = re.findall(chunk_pattern, sentence, flags=re.DOTALL)
+        chunk_class_list = []
         for chunk in chunks:
             morphemes = re.findall(morpheme_pattern, chunk[1], flags=re.DOTALL)
             morph_class_list = []
             for morpheme in morphemes:
                 m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
                 morph_class_list.append(m)
-            c = Chunk(morph_class_list, 1, chunk[0])
+            c = Chunk(morph_class_list, chunk[0], '?') # あとで変更
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
     return sentence_list
@@ -64,8 +63,8 @@ class Chunk():
         self.srcs = srcs
 
     def show_elements(self):
-        return f'morphs = {self.morphs}\tbase = {self.dst}\t\
-srcs = {self.srcs}'
+        return f'<{self.morphs[0].show_elements()}>\tdst = {self.dst}\t\
+srcs = {self.srcs}'  # どーしよーかなー
 
 if __name__ == "__main__":
     main()
