@@ -9,7 +9,6 @@ def main():
     in_file_name = 'neko.txt'
     out_file_name = 'neko.txt.cabocha'
     neko_txt = read_file(in_file_name)
-    # dependency_parsing(neko_txt)
     result = dependency_parsing(neko_txt)
     write_result(result, out_file_name)
 
