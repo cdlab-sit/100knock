@@ -40,7 +40,7 @@ def load_dependency_parsing(analytical_data):
             for morpheme in morphemes:
                 m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
                 morph_class_list.append(m)
-                srcs_dic[chunk[1]].append(chunk[0])
+                srcs_dic[chunk[1]] = (chunk[0])
             if chunk[0] in srcs_dic.keys():
                 c = Chunk(morph_class_list, chunk[1], srcs_dic[chunk[0]]) 
             else:
