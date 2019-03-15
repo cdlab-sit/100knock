@@ -13,7 +13,7 @@ def main():
     neko_txt_cabocha = read_file(file_name)
     result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
 #    print(result_dependency_parsing[7][0].show_chunk())
-    for a in result_dependency_parsing[8-1]:
+    for a in result_dependency_parsing[0]:
         print(a.get_chunk())
 
 
@@ -29,7 +29,7 @@ def load_dependency_parsing(analytical_data):
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
                        '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
-
+    srcs_dic = {}
     sentence_list = []
     for sentence in sentences:
         chunks = re.findall(chunk_pattern, sentence, flags=re.DOTALL)
@@ -40,8 +40,12 @@ def load_dependency_parsing(analytical_data):
             for morpheme in morphemes:
                 m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
                 morph_class_list.append(m)
-                
-            c = Chunk(morph_class_list, chunk[1], '?')  # あとで変更
+                srcs_dic[chunk[1]].append(chunk[0])
+            if chunk[0] in srcs_dic.keys():
+                c = Chunk(morph_class_list, chunk[1], srcs_dic[chunk[0]]) 
+            else:
+                c = Chunk(morph_class_list, chunk[1], [])  # あとで変更
+
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
     return sentence_list
