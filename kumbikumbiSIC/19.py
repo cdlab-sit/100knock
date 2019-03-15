@@ -38,8 +38,8 @@ for index, word in enumerate(col1):
 		ans_col = []
 
 # 自分用メモ：よく分からん
-#https://qiita.com/segavvy/items/adee520db1a257e347d5
+# https://qiita.com/segavvy/items/adee520db1a257e347d5
 ans.sort(key=lambda line: int(line[0]), reverse=True)
 for line in ans:
-	# UNIXに出力を合わせた
+	# UNIXコマンドに出力を合わせた
 	print(f'   {line[0]} {line[1]}')

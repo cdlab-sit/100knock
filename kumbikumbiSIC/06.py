@@ -8,6 +8,7 @@ def n_gram(words, n):
 	'''
 	result = []
 	for i,word in enumerate(words):
+		#print("{} : {}".format(i,words))
 		result.append(words[i:i+n])
 
 	return result
