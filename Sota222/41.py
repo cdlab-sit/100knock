@@ -12,9 +12,10 @@ def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
     result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
- 
-    for a in result_dependency_parsing[7]:
-        print(a.show_elements())
+#    print(result_dependency_parsing[7][0].show_chunk())
+    for a in result_dependency_parsing[8-1]:
+        print(a.get_chunk())
+
 
 def read_file(file_name):
     with open(file_name, 'r') as f:
@@ -24,47 +25,52 @@ def read_file(file_name):
 
 def load_dependency_parsing(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
-    chunk_pattern = r'<chunk id="\d*" link="(.+?)"(.+?)</chunk>'
+    chunk_pattern = r'<chunk id="(\d*)" link="(.+?)"(.+?)</chunk>'
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
                        '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
+
     sentence_list = []
     for sentence in sentences:
         chunks = re.findall(chunk_pattern, sentence, flags=re.DOTALL)
         chunk_class_list = []
         for chunk in chunks:
-            morphemes = re.findall(morpheme_pattern, chunk[1], flags=re.DOTALL)
+            morphemes = re.findall(morpheme_pattern, chunk[2], flags=re.DOTALL)
             morph_class_list = []
             for morpheme in morphemes:
                 m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
                 morph_class_list.append(m)
-            c = Chunk(morph_class_list, chunk[0], '?') # あとで変更
+                
+            c = Chunk(morph_class_list, chunk[1], '?')  # あとで変更
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
     return sentence_list
 
 
-class Morph():
+class Morph:
     def __init__(self, surface, base, pos, pos1):
         self.surface = surface
         self.base = base
         self.pos = pos
         self.pos1 = pos1
 
-    def show_elements(self):
+    def get_morph(self):
         return f'surface = {self.surface}\tbase = {self.base}\t\
 pos = {self.pos}\tpos1 = {self.pos1}'
 
 
-class Chunk():
+class Chunk:
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
         self.dst = dst
         self.srcs = srcs
 
-    def show_elements(self):
-        return f'<{self.morphs[0].show_elements()}>\tdst = {self.dst}\t\
-srcs = {self.srcs}'  # どーしよーかなー
+    def get_chunk(self):
+        show_morphs = []
+        for morph in self.morphs:
+            show_morphs.append(morph.surface)
+        morphs = ''.join(show_morphs)
+        return f'morphs[{morphs}]\tdst[{self.dst}]\tsrcs = {self.srcs}'
 
 if __name__ == "__main__":
     main()
