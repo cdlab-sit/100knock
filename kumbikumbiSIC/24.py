@@ -18,8 +18,8 @@ def get_UK(country_name):
 def get_media(article):
 	'''
 	Python の正規表現は、複数候補の中から最も長い文字列にマッチします。これを貪欲マッチとよびます。
-	しかし正規表現の後ろに ? を添えると、最も短い文字列にマッチするようになります。
-	参照
+	しかし正規表現の後ろに ? を添えると、最も短い文字列にマッチするようになります。これを非貪欲マッチ
+	参照：
 	https://python.atelierkobato.com/multi/
 	'''
 	files = re.findall("[file|ファイル]:(.*?)\|",article)
