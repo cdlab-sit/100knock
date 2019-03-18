@@ -13,8 +13,8 @@ def main():
     neko_txt_cabocha = read_file(file_name)
     result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
     sentence = int(input('何文目の文節の文字列と係り先を表示させますか？\n:'))
-    for i, a in enumerate(result_dependency_parsing[sentence - 1]):
-        print(f'[{i}]', a.get_chunk())
+    for i, chunk in enumerate(result_dependency_parsing[sentence - 1]):
+        print(f'[{i}]', chunk.get_elements())
 
 
 def read_file(file_name):
@@ -57,23 +57,27 @@ class Morph:
         self.pos = pos
         self.pos1 = pos1
 
-    def get_morph(self):
+    def get_elements(self):
         return f'surface = {self.surface}\tbase = {self.base}\t\
 pos = {self.pos}\tpos1 = {self.pos1}'
 
 
-class Chunk:  # クラスの代入の方法変更したい、呼び出されるほうがわかりにくいからdas=chunk[1]とかにしたい
+class Chunk:
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
         self.dst = dst
         self.srcs = srcs
 
-    def get_chunk(self):
+    def get_phrase(self):
         show_morphs = []
         for morph in self.morphs:
             show_morphs.append(morph.surface)
-        morphs = ''.join(show_morphs)
-        return f'morphs[{morphs}]\tdst[{self.dst}]\tsrcs = {self.srcs}'
+        return ''.join(show_morphs)
+
+    def get_elements(self):
+        return f'morphs[{self.get_phrase()}]\t \
+            dst[{self.dst}]\tsrcs = {self.srcs}'
+
 
 if __name__ == "__main__":
     main()
