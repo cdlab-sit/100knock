@@ -55,9 +55,9 @@ def get_section(article_UK):
         else:
             break
     sections = {}
-    for lv in range(min_lv, lv):
+    for lv in range(min_lv, lv):  # この方法はセクション名が同じものは消えるが、
         for section in list(dupli_sec[lv] - dupli_sec[lv + 1]):
-            sections[section] = lv
+            sections[section] = lv  # Help:セクションに同じセクションは推奨していないので良しとする
     return '\n'.join([f'{sec}: {lv}' for sec, lv in sections.items()])
 
 if __name__ == '__main__':

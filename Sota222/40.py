@@ -11,7 +11,7 @@ def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
     result = load_morpheme(neko_txt_cabocha)
-    sentence = int(input('何文目の形態素列を表示させますか？'))
+    sentence = int(input('何文目の形態素列を表示させますか？\n:'))
     for morph in result[sentence - 1]:
         print(morph.show_elements())
 

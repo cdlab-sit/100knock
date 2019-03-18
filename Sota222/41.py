@@ -12,9 +12,9 @@ def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
     result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
-#    print(result_dependency_parsing[7][0].show_chunk())
-    for a in result_dependency_parsing[0]:
-        print(a.get_chunk())
+    sentence = int(input('何文目の文節の文字列と係り先を表示させますか？\n:'))
+    for i, a in enumerate(result_dependency_parsing[sentence - 1]):
+        print(f'[{i}]', a.get_chunk())
 
 
 def read_file(file_name):
@@ -29,25 +29,23 @@ def load_dependency_parsing(analytical_data):
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
                        '(?:.+?),(.+?),(?:.+?)">(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
-    srcs_dic = {}
     sentence_list = []
     for sentence in sentences:
         chunks = re.findall(chunk_pattern, sentence, flags=re.DOTALL)
         chunk_class_list = []
+        srcs_dic = {}
         for chunk in chunks:
             morphemes = re.findall(morpheme_pattern, chunk[2], flags=re.DOTALL)
             morph_class_list = []
             for morpheme in morphemes:
                 m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
                 morph_class_list.append(m)
-                srcs_dic[chunk[1]] = (chunk[0])
-            if chunk[0] in srcs_dic.keys():
-                c = Chunk(morph_class_list, chunk[1], srcs_dic[chunk[0]]) 
-            else:
-                c = Chunk(morph_class_list, chunk[1], [])  # あとで変更
-
+                srcs_dic.setdefault(int(chunk[0]), chunk[1])
+            srcs = [k for k, v in srcs_dic.items() if v == chunk[0]]
+            c = Chunk(morph_class_list, chunk[1], srcs)
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
+
     return sentence_list
 
 
@@ -63,7 +61,7 @@ class Morph:
 pos = {self.pos}\tpos1 = {self.pos1}'
 
 
-class Chunk:
+class Chunk:  # クラスの代入の方法変更したい、呼び出されるほうがわかりにくいからdas=chunk[1]とかにしたい
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
         self.dst = dst
