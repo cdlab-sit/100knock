@@ -1,20 +1,14 @@
-''' 係り受け解析結果の読み込み（形態素） '''
-# 40に加えて，文節を表すクラスChunkを実装せよ．
-# このクラスは形態素（Morphオブジェクト）のリスト（morphs），係り先文節インデックス番号（dst），
-# 係り元文節インデックス番号のリスト（srcs）をメンバ変数に持つこととする．
-# さらに，入力テキストのCaboChaの解析結果を読み込み，１文をChunkオブジェクトのリストとして表現し，
-# 8文目の文節の文字列と係り先を表示せよ．第5章の残りの問題では，ここで作ったプログラムを活用せよ．
-
+''' 係り元と係り先の文節の表示 '''
+# 係り元の文節と係り先の文節のテキストをタブ区切り形式ですべて抽出せよ．
+# ただし，句読点などの記号は出力しないようにせよ．
 import re
 
 
 def main():
     file_name = 'neko.txt.cabocha'
     neko_txt_cabocha = read_file(file_name)
-    result_dependency_parsing = load_dependency_parsing(neko_txt_cabocha)
-    sentence = int(input('何文目の文節の文字列と係り先を表示させますか？\n:'))
-    for i, chunk in enumerate(result_dependency_parsing[sentence - 1]):
-        print(f'[{i}]', chunk.get_elements())
+    sentence_list = load_dependency_parsing(neko_txt_cabocha)
+    write_dependency_relation(sentence_list)
 
 
 def read_file(file_name):
@@ -46,7 +40,6 @@ def load_dependency_parsing(analytical_data):
             c = Chunk(morphs=morph_class_list, dst=chunk[1], srcs=srcs)
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
-
     return sentence_list
 
 
@@ -57,7 +50,7 @@ class Morph:
         self.pos = pos
         self.pos1 = pos1
 
-    def get_elements(self):
+    def get_morph(self):
         return f'surface = {self.surface}\tbase = {self.base}\t\
 pos = {self.pos}\tpos1 = {self.pos1}'
 
@@ -65,13 +58,14 @@ pos = {self.pos}\tpos1 = {self.pos1}'
 class Chunk:
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
-        self.dst = dst
+        self.dst = int(dst)
         self.srcs = srcs
 
     def get_phrase(self):
         show_morphs = []
         for morph in self.morphs:
-            show_morphs.append(morph.surface)
+            if morph.pos != '記号':
+                show_morphs.append(morph.surface)
         return ''.join(show_morphs)
 
     def get_elements(self):
@@ -79,5 +73,13 @@ class Chunk:
 dst[{self.dst}]\tsrcs = {self.srcs}'
 
 
+def write_dependency_relation(sentences):
+    f = open('dependency_relation.txt', 'w')
+    for chunks in sentences:
+        for chunk in chunks:
+            phrase = chunk.get_phrase()
+            if chunk.dst != -1 and phrase:
+                f.write(f'{phrase}\t{chunks[chunk.dst].get_phrase()}\n')
+    f.close()
 if __name__ == "__main__":
     main()
