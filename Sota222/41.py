@@ -75,8 +75,8 @@ class Chunk:
         return ''.join(show_morphs)
 
     def get_elements(self):
-        return f'morphs[{self.get_phrase()}]\t \
-            dst[{self.dst}]\tsrcs = {self.srcs}'
+        return f'morphs[{self.get_phrase()}]\t\
+dst[{self.dst}]\tsrcs = {self.srcs}'
 
 
 if __name__ == "__main__":
