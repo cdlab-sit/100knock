@@ -38,11 +38,12 @@ def load_dependency_parsing(analytical_data):
             morphemes = re.findall(morpheme_pattern, chunk[2], flags=re.DOTALL)
             morph_class_list = []
             for morpheme in morphemes:
-                m = Morph(morpheme[3], morpheme[2], morpheme[0], morpheme[1])
+                m = Morph(surface=morpheme[3], base=morpheme[2],
+                          pos=morpheme[0], pos1=morpheme[1])
                 morph_class_list.append(m)
                 srcs_dic.setdefault(int(chunk[0]), chunk[1])
             srcs = [k for k, v in srcs_dic.items() if v == chunk[0]]
-            c = Chunk(morph_class_list, chunk[1], srcs)
+            c = Chunk(morphs=morph_class_list, dst=chunk[1], srcs=srcs)
             chunk_class_list.append(c)
         sentence_list.append(chunk_class_list)
 
