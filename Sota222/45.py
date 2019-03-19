@@ -6,13 +6,23 @@
 #  述語に係る助詞を格とする
 #  述語に係る助詞（文節）が複数あるときは，すべての助詞をスペース区切りで辞書順に並べる
 import re
+import CaboCha
 
 
 def main():
-    file_name = 'neko.txt.cabocha'
-    neko_txt_cabocha = read_file(file_name)
-    sentence_list = load_dependency_parsing(neko_txt_cabocha)
-    show_noun2verb(sentence_list)
+    input_line = input('動詞の格パターンの抽出したい文章を入力してください\n:')
+    input_line_cabocha = dependency_parsing(input_line)
+    sentence_list = load_dependency_parsing(input_line_cabocha)
+    extract_verb_case_pattern(sentence_list)
+
+
+def dependency_parsing(sentence):
+    c = CaboCha.Parser()
+    analysis_results = []
+    for line in sentence.split('\n'):
+        tree = c.parse(line)
+        analysis_results.append(tree.toString(CaboCha.FORMAT_XML))
+    return '\n'.join(analysis_results)
 
 
 def read_file(file_name):
@@ -25,7 +35,7 @@ def load_dependency_parsing(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
     chunk_pattern = r'<chunk id="(\d*)" link="(.+?)"(.+?)</chunk>'
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
-                       '(?:.+?),(?:.+?),(?:.+?),(?:.+?),(.+?),(?:.+?),(?:.+?)>(.+?)</tok>'
+                       '.+?,.+?,.+?,.+?,(.+?),.+?>(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
     sentence_list = []
     for sentence in sentences:
@@ -80,17 +90,17 @@ dst[{self.dst}]\tsrcs = {self.srcs}'
         return [morph.pos for morph in self.morphs]
 
 
-def show_noun2verb(sentences):
-    with open('noun2verb.txt', 'w') as f:
-        for chunks in sentences:
-            for chunk in chunks:
-                pos_list = chunk.get_pos()
-                # print(pos_list)
-                if '動詞' in pos_list:
-                    pos_index = pos_list.index('動詞')
-                    print(chunk.morphs[pos_index].surface)
-                    print(chunk.morphs[pos_index].base)
-                    print(chunk.morphs[pos_index].pos)
-                    print(chunk.morphs[pos_index].pos1)
+def extract_verb_case_pattern(sentences):
+
+    for chunks in sentences:
+        for chunk in chunks:
+            pos_list = chunk.get_pos()
+            if '動詞' in pos_list:
+                pos_index = pos_list.index('動詞')
+                srcs_list = chunk.srcs
+                particle_auxiliary_verbs = sorted(
+                    [chunks[srcs].morphs[-1].surface for srcs in srcs_list])
+                print(f'{chunk.morphs[pos_index].base}\t\
+{" ".join(particle_auxiliary_verbs)}')
 if __name__ == "__main__":
     main()
