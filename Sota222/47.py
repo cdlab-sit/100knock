@@ -97,18 +97,18 @@ dst[{self.dst}]\tsrcs = {self.srcs}'
 def extract_verb_case_pattern(sentences):
     f = open('extract_verb_frame_info.txt', 'w')
     for chunks in sentences:
-        for chunk in chunks:
-            for i, morph in enumerate(chunk.morphs):
-                if morph.pos == '名詞' and morph.pos1 == 'サ変接続' and \
-                   chunk.morphs[i+1] and chunk.morphs[i+1].surface == 'を' and\
-                   chunk.morphs[i+1].pos == '助詞' and \
-                   '動詞' in chunks[chunk.dst].get_pos():
-                    print(f'{chunk.get_phrase()}{chunks[chunk.dst].get_phrase()}')
+        for i, chunk in enumerate(chunks):
+            for morph in chunk.morphs:  # and chunks[i-1].morphs[-1].surface == 'を'
+                if morph.pos == '動詞' and 'サ変接続' in chunks[i-1].get_pos1() and chunks[i-1].morphs[-1].surface == 'を':
+                    print(f'{chunks[i-1].get_phrase()}{chunk.get_phrase()}')
                     srcs_list = chunks[chunk.dst].srcs
-                    particle_auxiliary_verbs = sorted(
-                        [chunks[srcs].morphs[-1].surface for srcs in srcs_list])
-                    phrases = sorted(
-                        [chunks[srcs].get_phrase() for srcs in srcs_list])
+                    particle_auxiliary_verbs = []
+                    phrases = []
+                    for srcs in srcs_list[:-1]:
+                        index = -2 if chunks[srcs].morphs[-1].pos == '記号' else -1
+                        particle_auxiliary_verbs.append(chunks[srcs].morphs[index].surface)
+                        phrases.append(chunks[srcs].get_phrase())
+                        print(f'{chunks[srcs].morphs[index].surface}  {chunks[srcs].get_phrase()}\n')
                     print(f'{" ".join(particle_auxiliary_verbs)}\t{" ".join(phrases)}\n')
     f.close()
 
