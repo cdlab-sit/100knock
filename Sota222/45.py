@@ -1,6 +1,6 @@
 ''' 動詞の格パターンの抽出 '''
-# 今回用いている文章をコーパスと見なし，日本語の述語が取りうる格を調査したい． 
-# 動詞を述語，動詞に係っている文節の助詞を格と考え，述語と格をタブ区切り形式で出力せよ． 
+# 今回用いている文章をコーパスと見なし，日本語の述語が取りうる格を調査したい．
+# 動詞を述語，動詞に係っている文節の助詞を格と考え，述語と格をタブ区切り形式で出力せよ．
 # ただし，出力は以下の仕様を満たすようにせよ．
 #  動詞を含む文節において，最左の動詞の基本形を述語とする
 #  述語に係る助詞を格とする
@@ -8,12 +8,13 @@
 import re
 import CaboCha
 
+# python
 
 
 def main():
-    input_line = input('動詞の格パターンの抽出したい文章を入力してください\n:')
-    input_line_cabocha = dependency_parsing(input_line)
-    sentence_list = load_dependency_parsing(input_line_cabocha)
+    file_name = 'neko.txt.cabocha'
+    neko_txt_cabocha = read_file(file_name)
+    sentence_list = load_dependency_parsing(neko_txt_cabocha)
     extract_verb_case_pattern(sentence_list)
 
 
@@ -26,11 +27,17 @@ def dependency_parsing(sentence):
     return '\n'.join(analysis_results)
 
 
+def read_file(file_name):
+    with open(file_name, 'r') as f:
+        contents = f.read()
+    return contents
+
+
 def load_dependency_parsing(analytical_data):
     sentence_pattern = r"<sentence>(.+?)</sentence>"
     chunk_pattern = r'<chunk id="(\d*)" link="(.+?)"(.+?)</chunk>'
     morpheme_pattern = r'<tok id="\d*" feature="(.+?),(.+?),' \
-                       '.+,(.+?),.+?,.+?">(.+?)</tok>'
+                       '.+?,.+?,.+?,.+?,(.+?),.+?>(.+?)</tok>'
     sentences = re.findall(sentence_pattern, analytical_data, flags=re.DOTALL)
     sentence_list = []
     for sentence in sentences:
@@ -70,6 +77,10 @@ class Chunk:
         self.dst = int(dst)
         self.srcs = srcs
 
+    def get_elements(self):
+        return f'morphs[{self.get_phrase()}]\t\
+dst[{self.dst}]\tsrcs = {self.srcs}'
+
     def get_phrase(self):
         show_morphs = []
         for morph in self.morphs:
@@ -78,28 +89,29 @@ class Chunk:
         return ''.join(show_morphs)
 
     def get_pos(self):
-        print([morph.pos for morph in self.morphs])
         return [morph.pos for morph in self.morphs]
-        
-    def get_elements(self):
-        return f'morphs[{self.get_phrase()}]\t\
-dst[{self.dst}]\tsrcs = {self.srcs}'
 
 
 def extract_verb_case_pattern(sentences):
-
+    f = open('extract_verb_case_pattern.txt', 'w')
     for chunks in sentences:
         for chunk in chunks:
-            print(chunk)
             pos_list = chunk.get_pos()
-            print(pos_list)
             if '動詞' in pos_list:
                 pos_index = pos_list.index('動詞')
-                print(chunk.morphs[pos_index].surface)
-                print(chunk.morphs[pos_index].base)
-                print(chunk.morphs[pos_index].pos)
-                print(chunk.morphs[pos_index].pos1)
-
+                srcs_list = chunk.srcs
+                particle_auxiliary_verbs = sorted(  # [-1]じゃないほうがいいけどモチベがあがらん
+                    [chunks[srcs].morphs[-1].surface for srcs in srcs_list])
+                f.write(f'{chunk.morphs[pos_index].base}\t\
+{" ".join(particle_auxiliary_verbs)}\n')
+    f.close()
 
 if __name__ == "__main__":
     main()
+
+# UNIX
+# sort extract_verb_case_pattern.txt | uniq --count | sort --numeric-sort
+# --reverse > "all.txt"
+
+# grep "^する\s" extract_verb_case_pattern.txt | sort | uniq --count
+# | sort --numeric-sort --reverse > "suru.txt"
