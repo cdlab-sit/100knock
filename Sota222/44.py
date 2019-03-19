@@ -84,9 +84,7 @@ def write_directed_graph(sentences):
         for chunk in chunks:
             phrase = chunk.get_phrase()
             if chunk.dst != -1 and phrase:
-                print((f'{phrase}\t{chunks[chunk.dst].get_phrase()}\n'))
                 edges.append((phrase, chunks[chunk.dst].get_phrase()))
-    # g = pdt.graph_from_edges(edges)
     g = pdt.graph_from_edges(edges, directed=True)
     g.write_jpeg('graph_from_edges_dot.jpg', prog='dot')
 
