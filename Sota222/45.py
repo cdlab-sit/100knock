@@ -1,6 +1,6 @@
 ''' 動詞の格パターンの抽出 '''
-# 今回用いている文章をコーパスと見なし，日本語の述語が取りうる格を調査したい． 
-# 動詞を述語，動詞に係っている文節の助詞を格と考え，述語と格をタブ区切り形式で出力せよ． 
+# 今回用いている文章をコーパスと見なし，日本語の述語が取りうる格を調査したい．
+# 動詞を述語，動詞に係っている文節の助詞を格と考え，述語と格をタブ区切り形式で出力せよ．
 # ただし，出力は以下の仕様を満たすようにせよ．
 #  動詞を含む文節において，最左の動詞の基本形を述語とする
 #  述語に係る助詞を格とする
@@ -8,11 +8,13 @@
 import re
 import CaboCha
 
+# python
+
 
 def main():
-    input_line = input('動詞の格パターンの抽出したい文章を入力してください\n:')
-    input_line_cabocha = dependency_parsing(input_line)
-    sentence_list = load_dependency_parsing(input_line_cabocha)
+    file_name = 'neko.txt.cabocha'
+    neko_txt_cabocha = read_file(file_name)
+    sentence_list = load_dependency_parsing(neko_txt_cabocha)
     extract_verb_case_pattern(sentence_list)
 
 
@@ -91,16 +93,25 @@ dst[{self.dst}]\tsrcs = {self.srcs}'
 
 
 def extract_verb_case_pattern(sentences):
-
+    f = open('extract_verb_case_pattern.txt', 'w')
     for chunks in sentences:
         for chunk in chunks:
             pos_list = chunk.get_pos()
             if '動詞' in pos_list:
                 pos_index = pos_list.index('動詞')
                 srcs_list = chunk.srcs
-                particle_auxiliary_verbs = sorted(
+                particle_auxiliary_verbs = sorted(  # [-1]じゃないほうがいいけどモチベがあがらん
                     [chunks[srcs].morphs[-1].surface for srcs in srcs_list])
-                print(f'{chunk.morphs[pos_index].base}\t\
-{" ".join(particle_auxiliary_verbs)}')
+                f.write(f'{chunk.morphs[pos_index].base}\t\
+{" ".join(particle_auxiliary_verbs)}\n')
+    f.close()
+
 if __name__ == "__main__":
     main()
+
+# UNIX
+# sort extract_verb_case_pattern.txt | uniq --count | sort --numeric-sort
+# --reverse > "all.txt"
+
+# grep "^する\s" extract_verb_case_pattern.txt | sort | uniq --count
+# | sort --numeric-sort --reverse > "suru.txt"
