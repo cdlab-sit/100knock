@@ -128,10 +128,8 @@ def make_received_relates_pass(sentences):
                         write_line.append(f'-> {_chunk_line[i].get_phrase()}')
                 write_line.append(f'| {crosses[0].get_phrase()}')
             else:
-                _chunk_line = chunk_line[1:]
-                for cross in crosses:
-                    _chunk_line.remove(cross)
-
+                _chunk_line = [_chunk for _chunk in chunk_line[1:] 
+                               if _chunk not in crosses]
                 for _chunk in _chunk_line:
                     write_line.append(f'-> {_chunk.get_phrase()}')
                 write_line.append('-> Y')
