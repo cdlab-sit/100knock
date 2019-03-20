@@ -100,7 +100,6 @@ def make_pass(sentences):
                 if edge_tuple[1].dst == -1:
                     break
                 edge_tuple = edges[edge_tuple[0].dst]
-        if line:
             print(' -> '.join(line))
 
 if __name__ == "__main__":
