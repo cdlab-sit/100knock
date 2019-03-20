@@ -118,16 +118,27 @@ def make_received_relates_pass(sentences):
         for _chunk_line in chunk_lines[n+1:]:
             crosses = list(set(chunk_line) & set(_chunk_line))
             write_line = []
-            write_line.append(f'X{chunk_line[0].get_phrase_n()} |')
+            write_line.append(f'X{chunk_line[0].get_phrase_n()}')
             if len(crosses) == 1:
-
+                write_line.append('|')
                 for i, _chunk in enumerate(_chunk_line[:-1]):
                     if i == 0:
                         write_line.append(f'Y{_chunk_line[0].get_phrase_n()}')
                     else:
                         write_line.append(f'-> {_chunk_line[i].get_phrase()}')
-                write_line.append(f'| {crosses[0].get_phrase()}\n')
+                write_line.append(f'| {crosses[0].get_phrase()}')
             else:
+                _chunk_line = chunk_line[1:]
+                for cross in crosses:
+                    _chunk_line.remove(cross)
+
+                for _chunk in _chunk_line:
+                    write_line.append(f'-> {_chunk.get_phrase()}')
+                write_line.append('-> Y')
             print(' '.join(write_line))
+
 if __name__ == "__main__":
     main()
+
+# これも出来がひどいな...
+# 100本終わったら修正するかもしれない
