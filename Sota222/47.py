@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
 # cut --fields=1 result.txt | sort | uniq --count | sort --numeric-sort
 #  --reverse > "predicate.txt"
-# cut --fields=1,2 extract_verb_frame_info.txt | sort | uniq --count 
+# cut --fields=1,2 extract_verb_frame_info.txt | sort | uniq --count
 # | sort --numeric-sort --reverse > "predicate_Particle.txt"
 
 # 出来がひどい、が! やる気が出ない!!
