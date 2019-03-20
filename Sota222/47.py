@@ -11,9 +11,9 @@ import CaboCha
 
 
 def main():
-    input_line = input('動詞の格パターンの抽出したい文章を入力してください\n:')
-    input_line_cabocha = dependency_parsing(input_line)
-    sentence_list = load_dependency_parsing(input_line_cabocha)
+    file_name = 'neko.txt.cabocha'
+    neko_txt_cabocha = read_file(file_name)
+    sentence_list = load_dependency_parsing(neko_txt_cabocha)
     extract_verb_case_pattern(sentence_list)
 
 
@@ -101,18 +101,28 @@ def extract_verb_case_pattern(sentences):
             for morph in chunk.morphs:
                 if morph.pos == '動詞' and 'サ変接続' in chunks[i-1].get_pos1() \
                    and chunks[i-1].morphs[-1].surface == 'を':
-                    f.write(f'{chunks[i-1].get_phrase()}{chunk.get_phrase()}')
+                    f.write(f'{chunks[i-1].get_phrase()}{morph.base}')
                     srcs_list = chunks[chunk.dst].srcs
                     related_predicate = {}
-                    for srcs in srcs_list[:-1]:  # これでいいのか？
-                        index = -2 if chunks[srcs].morphs[-1].pos == '記号' \
-                                   else -1
-                        related_predicate[chunks[srcs].morphs[index].surface] \
-                            = chunks[srcs].get_phrase()
+                    for srcs in srcs_list[:-1]:
+                        last_p_particle = [morph.surface
+                                           for morph in chunks[srcs].morphs
+                                           if morph.pos == '助詞']
+                        if last_p_particle:
+                            related_predicate[last_p_particle[0]] \
+                                = chunks[srcs].get_phrase()
                     related_predicate = dict(sorted(related_predicate.items()))
                     f.write(f'\t{" ".join(related_predicate.keys())}')
-                    f.write(f'\t{" ".join(related_predicate.values())}')
+                    f.write(f'\t{" ".join(related_predicate.values())}\n')
     f.close()
 
 if __name__ == "__main__":
     main()
+
+# cut --fields=1 result.txt | sort | uniq --count | sort --numeric-sort
+#  --reverse > "predicate.txt"
+# cut --fields=1,2 extract_verb_frame_info.txt | sort | uniq --count 
+# | sort --numeric-sort --reverse > "predicate_Particle.txt"
+
+# 出来がひどい、が! やる気が出ない!!
+# 100本終わったら修正するかもしれない
