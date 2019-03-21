@@ -21,6 +21,6 @@ if __name__ == '__main__':
 
 # コマンドライン上で操作するときについて
 # java -cp "*" -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators
-# tokenize,ssplit,pos,lemma,ner -file nlp.txt
+# tokenize,ssplit,pos,lemma,ner parse, dcoref -file nlp.txt
 # というコマンドを使ったが、-annotatorsオプションがないと OutOfMemoryError: Java heap space
 # が発生。理由はわからん。
