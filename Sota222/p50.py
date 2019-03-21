@@ -7,7 +7,7 @@ import re
 def main():
     file_name = 'nlp.txt'
     sentence = read_file(file_name)
-    sentence_list = devide_sentence(sentence)
+    sentence_list = divide_sentence(sentence)
     print('\n'.join(sentence_list))
 
 
@@ -17,7 +17,7 @@ def read_file(file_name):
     return contents
 
 
-def devide_sentence(sentence):
+def divide_sentence(sentence):
     return re.split(r'[.;:?!] [A-Z]', sentence)
 
 
