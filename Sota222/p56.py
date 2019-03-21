@@ -16,9 +16,10 @@ def main():
 
 def replace_coreference(file_name):
     root = ET.parse(file_name).getroot()
-    coreference_iter = root.find('document').find('coreference')
-    for coreferences in coreference_iter.findall('coreference'):
-        print(coreferences[0])
+    coreference_iter = root[0].find('coreference')
+    print(type(coreference_iter))
+    for coreference in coreference_iter.findall('coreference'):
+        print(coreference[0].findtext('text'))
         print('a')
     return 
 
