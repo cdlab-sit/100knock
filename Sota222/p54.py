@@ -6,11 +6,11 @@ import glob
 
 def main():
     file_name = '**/nlp.txt.xml'
-    pos_tag_word = read_xml(glob.glob(file_name, recursive=True)[0])
+    pos_tag_word = read_xml_pos_tag(glob.glob(file_name, recursive=True)[0])
     print(pos_tag_word)
 
 
-def read_xml(file_name):
+def read_xml_pos_tag(file_name):
     tree = ET.parse(file_name)
     root = tree.getroot()
     words = [f'{token.findtext("word")}\t\
