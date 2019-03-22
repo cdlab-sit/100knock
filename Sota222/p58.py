@@ -10,12 +10,14 @@ import glob
 
 def main():
     file_name = '**/nlp.txt.xml'
-    extract_svo(glob.glob(file_name, recursive=True)[0])
+    svo_list = extract_svo(glob.glob(file_name, recursive=True)[0])
+    print(svo_list)
 
 
 def extract_svo(file_name):
     root = ET.parse(file_name).getroot()
     dependencie_iter = root.iter('dependencies')
+    svo_list = []
     for dependencie in dependencie_iter:
         dep_list = []
         _nsubj_words = []
@@ -27,11 +29,19 @@ def extract_svo(file_name):
             if d_type == 'nsubj' or d_type == 'dobj':
                 dep_list.append((d_type, dep[0].text, dep[1].text))
                 if d_type == 'nsubj':
-                    _nsubj_words.append(dep[0].text) 
+                    _nsubj_words.append(dep[0].text)
                 else:
                     _dobj_words.append(dep[0].text)
-                print('n', _nsubj_words)
-                print('d',_dobj_words)
-        print('end')
+        verbs = set(_nsubj_words).intersection(set(_dobj_words))
+        for verb in verbs:
+            for dep in dep_list:
+                if dep[1] == verb:
+                    if dep[0] == 'nsubj':
+                        _subject = dep[2]
+                    else:
+                        _object = dep[2]
+            svo_list.append(f'{_subject}\t{verb}\t{_object}')
+    return '\n'.join(list(dict.fromkeys(svo_list)))
+
 if __name__ == '__main__':
     main()
