@@ -18,8 +18,8 @@ def set_db(file_name):
         for line in f_file:
             data = json.loads(line)
             if 'name' in data and 'area' in data:
-                artist_db.put(data.get('name', '').encode('utf-8'),
-                              data.get('area', '').encode('utf-8'))
+                artist_db.put(data.get('name').encode('utf-8'),
+                              data.get('area').encode('utf-8'))
     artist_db.close()
 if __name__ == '__main__':
     main()
