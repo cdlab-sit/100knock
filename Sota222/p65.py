@@ -1,6 +1,5 @@
-''' MongoDBの検索 '''
-# MongoDBのインタラクティブシェルを用いて，"Queen"というアーティストに関する情報を取得せよ．
-# さらに，これと同様の処理を行うプログラムを実装せよ．
+''' 検索件数の取得 '''
+# MongoDBのインタラクティブシェルを用いて，活動場所が「Japan」となっているアーティスト数を求めよ
 
 import pymongo
 
@@ -14,7 +13,7 @@ def search_Queen():
     client = pymongo.MongoClient('localhost', 27017)
     db = client.artist_database
     collection = db.artist_collection
-    ret = collection.find({'$and': [{'name': 'Queen'}]})
+    ret = collection.find({'name': 'Queen'})
     return '\n\n'.join([str(doc) for doc in ret])
 
 if __name__ == '__main__':
