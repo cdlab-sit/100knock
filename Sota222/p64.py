@@ -3,10 +3,8 @@
 # さらに，次のフィールドでインデックスを作成せよ
 # : name, aliases.name, tags.value, rating.value
 
-
 import gzip
 import json
-import plyvel
 import pymongo
 
 
