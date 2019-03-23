@@ -17,8 +17,6 @@ def set_db(file_name):
     client = pymongo.MongoClient('localhost', 27017)
     db = client.artist_database
     collection = db.artist_collection
-    print("db:", db.name)
-    # collection = db.artist
     buf = []
     with gzip.open(file_name, "r") as f_file:
         i = 0
