@@ -1,2 +1,6 @@
-.vscode/*.json
-artist.json.gz
+
+
+.vscode
+!/p69s/.vscode
+*.gz
+
