@@ -27,7 +27,7 @@ def main():
     pos_data_num = len(data) - neg_data_num
     print('neg_data_num=', neg_data_num, 'pos_data_num=', pos_data_num)
     random.shuffle(data)
-    write_data(W_FILE, data)
+    print(write_data(W_FILE, data))
     
 
 def extract_tar_file(c_file, file):
@@ -39,6 +39,7 @@ def extract_tar_file(c_file, file):
 def write_data(w_file, data):
     with open(w_file, mode='w') as f:
         f.writelines(data)
-    print('wrote sentiment.txt') 
+    return 'wrote '+ w_file
+    
 if __name__ == '__main__':
     main()
