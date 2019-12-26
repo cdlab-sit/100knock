@@ -8,23 +8,43 @@ import p71
 
 S_FILE='stop-word.txt'
 CORRECT_DATA='sentiment.txt'
+W_FILE='sentiment-identity.txt'
 stop_words=[]
 
+
 def main():
-    print(get_identity(S_FILE, CORRECT_DATA))
-    
-def get_identity(s_file, correct_data):
+    sentiment_identity, identity = take_identity(W_FILE, S_FILE, CORRECT_DATA)
+    write_data(W_FILE, sentiment_identity)
+    print(' '.join(identity))
+    print(len(identity))
+
+def take_identity(w_file, s_file, correct_data):
     stemmer = nltk.PorterStemmer()
     stop_words = p71.make_stop_words(s_file)
     correct_data_list = p71.read_data(correct_data)
+    sentiment_identity = []
     identity = []
     for line in correct_data_list[:]:
         words = line[2:].split()
-        for stop_word in stop_words:
-            if stop_word in words:
-                words.remove(stop_word)
-        for word in words:
-            identity.append(stemmer.stem(word))
-    return identity
+        # print(' '.join(words))
+        for i, word in enumerate(words):
+            if not word.isalpha() or word in stop_words:
+                words.remove(word)
+            else :
+                words[i] = stemmer.stem(word)
+                identity.append(words[i])
+        one_line = line[:2] + ' '.join(words)
+        sentiment_identity.append(one_line)
+    identity = list(set(identity))
+    identity.sort()
+    # print(sentiment_identity)
+    return sentiment_identity, identity
+
+def write_data(file, data):
+    f =  open(file, 'w')
+    for line in data:
+        f.write(line)
+        f.write('\n')
+    f.close()
 if __name__ == '__main__':
     main()
