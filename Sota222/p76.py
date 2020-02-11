@@ -10,6 +10,7 @@ FILE = 'sentiment-identity.txt'
 S_FILE='stop-word.txt'
 CORRECT_DATA='sentiment.txt'
 W_FILE='sentiment-identity.txt'
+W_RESULT = 'p76_result.txt'
 
 def main():
     X = []
@@ -52,13 +53,18 @@ def main():
     print("正解率を出力\n", accuracy_score(Y_test, predict))
     predict_proba = model.predict_proba(X_test)
 
+    w_lines = []
     for i in range(Y_test.size):
-        print(
-            '+1' if Y_test[i] == 0 else '-1',
-            '+1' if predict[i] == 0 else '-1',
-            predict_proba[i][0] if predict[i] == 0 else predict_proba[i][1]
-        )
-        print('------------------')
+        test_y = '+1' if Y_test[i] == 0 else '-1'
+        prefict_y = '+1' if predict[i] == 0 else '-1'    
+        probability= str(predict_proba[i][0] if predict[i] == 0 else predict_proba[i][1])
+        line = test_y + ' ' + prefict_y + ' ' + probability
+        print(line)
+        w_lines.append(line)
+    
+    with open(W_RESULT, mode='w') as f:
+        f.write('\n'.join(w_lines))
+
 
 if __name__ == '__main__':
     main()
